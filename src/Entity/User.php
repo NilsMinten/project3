@@ -192,6 +192,25 @@ class User implements UserInterface
         return $this->rating;
     }
 
+    public function addRating(RatingPoints $ratingPoints) {
+        if ($this->rating !== null) {
+            $this->rating->add($ratingPoints);
+
+            return;
+        }
+
+        $this->rating = new ArrayCollection([$ratingPoints]);
+    }
+
+    public function getSingleRating(GameType $gameType): ?RatingPoints
+    {
+        $rating = array_values(array_filter($this->getRating()->toArray(), function (RatingPoints $rating) use ($gameType) {
+            return $rating->getGameType() === $gameType;
+        }));
+
+        return count($rating) > 0 ? $rating[0] : null;
+    }
+
     public function getMasterclasses(): Collection
     {
         return $this->masterclasses;

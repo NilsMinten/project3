@@ -52,9 +52,14 @@
         {% else %}
             {% if tournament.visitors|length >= tournament.maximumMembers %}
                 <span style="color: purple">This tournament is full</span>
+            {% elseif tournament.runningStatus is not null and tournament.runningStatus.status == 'finished' %}
+                <span style="color: purple">This tournament is finished</span>
             {% else %}
                 <a href="{{ path('tournament_join', {'id': tournament.id }) }}" class="btn btn-success">Join</a>
             {% endif %}
+        {% endif %}
+        {% if tournament.runningStatus is not null and tournament.runningStatus.status != 'finished' %}
+            <a href="{{ path('tournament_start_running', {'id': tournament.id }) }}" class="btn btn-success">See info</a>
         {% endif %}
     </div>
 

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Running: {{ tournament.name }}{% endblock %}
+
+{% block body %}
+    <form action="{{ path('tournament_pick_victors', { 'id': tournament.id }) }}" method="post">
+    {% for tableName, users in tables %}
+        <h1>{{ tableName }}</h1>
+
+        {% for user in users %}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{tableName}}" id="{{tableName}}{{ user.id }}" value="{{user.id}}" required="required">
+                <label class="form-check-label" for="{{tableName}}{{ user.id }}">
+                   {{ user.username }}
+                </label>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+        <input type="hidden" name="submitted" value="yes">
+        <button class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}
