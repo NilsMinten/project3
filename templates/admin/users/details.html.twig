@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | User details{% endblock %}
+
+{% block body %}
+    <h2>User details</h2>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>ID:</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Username:</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>First name:</th>
+                <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Last name:</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Role:</th>
+                <td>
+                    {% for role in user.roles %}
+                        {% if loop.last %}
+                            {{ role }}
+                        {% else %}
+                            {{ role }} |
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-group">
+        <a href="{{ path('admin_user_edit', { 'id': user.id }) }}" class="btn btn-warning">Edit</a>
+        <a href="{{ path('admin_user_delete_confirm', { 'id': user.id }) }}" class="btn btn-danger">Delete</a>
+    </div>
+
+{% endblock %}

@@ -11,8 +11,6 @@ security:
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
-
         users:
             entity:
                 class: 'App\Entity\User'
@@ -20,7 +18,7 @@ security:
 
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js|ico)/
             security: false
 
         main:
@@ -32,7 +30,6 @@ security:
                 check_path: login
             logout:
                 path:               logout
-                target:             post_logout
                 invalidate_session: true
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -45,5 +42,7 @@ security:
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/admin/users?, roles: ROLE_ADMIN }
+         - { path: ^/admin?, roles: ROLE_EMPLOYEE }
          - { path: ^/?, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
