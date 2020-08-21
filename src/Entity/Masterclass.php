@@ -20,15 +20,20 @@ class Masterclass
      */
     private $id;
 
+    /** @var string
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
     /**
      * @var GameType
-     * @ORM\OneToMany(targetEntity="GameType", mappedBy="masterclasses", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="GameType", inversedBy="masterclasses", cascade={"persist"})
      */
     private $gameType;
 
     /**
      * @var Collection
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="masterclasses", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="masterclasses", cascade={"persist"})
      */
     private $visitors;
 
@@ -44,33 +49,39 @@ class Masterclass
      */
     private $maximumMembers;
 
-    public function __construct(GameType $gameType, int $minimumRating, int $maximumMembers)
-    {
-        $this->gameType = $gameType;
-        $this->minimumRating = $minimumRating;
-        $this->maximumMembers = $maximumMembers;
+    /** @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $startTime;
 
-        $this->visitors = new ArrayCollection();
+    public function getId()
+    {
+        return $this->id;
     }
 
-    public function getGameType(): GameType
+    public function getGameType(): ?GameType
     {
         return $this->gameType;
     }
 
-    public function getVisitors(): Collection
+    public function getVisitors(): ?Collection
     {
         return $this->visitors;
     }
 
-    public function addVisitor(User $user): void
+    public function setVisitors(Collection $visitors): void
+    {
+        $this->visitors = $visitors;
+    }
+
+    public function addSingleVisitor(User $user): void
     {
         $this->visitors->add($user);
     }
 
     public function removeVisitor(User $user): void
     {
-        $this->visitors->remove($user);
+        $this->visitors->removeElement($user);
     }
 
     public function getMinimumRating(): int
@@ -91,5 +102,30 @@ class Masterclass
     public function setMaximumMembers(int $maximumMembers): void
     {
         $this->maximumMembers = $maximumMembers;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setGameType(GameType $gameType): void
+    {
+        $this->gameType = $gameType;
+    }
+
+    public function getStartTime(): ?\DateTime
+    {
+        return $this->startTime;
+    }
+
+    public function setStartTime(\DateTime $startTime): void
+    {
+        $this->startTime = $startTime;
     }
 }

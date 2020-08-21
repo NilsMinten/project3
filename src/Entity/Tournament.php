@@ -3,7 +3,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TournamentRepository;
@@ -20,15 +19,20 @@ class Tournament
      */
     private $id;
 
+    /** @var string
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
     /**
      * @var GameType
-     * @ORM\OneToMany(targetEntity="GameType", mappedBy="tournaments", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="GameType", inversedBy="tournaments", cascade={"persist"})
      */
     private $gameType;
 
     /**
      * @var Collection
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="tournaments", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="tournaments", cascade={"persist"})
      */
     private $visitors;
 
@@ -44,33 +48,49 @@ class Tournament
      */
     private $maximumMembers;
 
-    public function __construct(GameType $gameType, int $priceMoney, int $maximumMembers)
-    {
-        $this->gameType = $gameType;
-        $this->priceMoney = $priceMoney;
-        $this->maximumMembers = $maximumMembers;
+    /** @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $startTime;
 
-        $this->visitors = new ArrayCollection();
+    /** @var int
+     * @ORM\Column(type="integer")
+     */
+    private $tables;
+
+    /** @var string
+     * @ORM\Column(type="json")
+     */
+    private $runningStatus;
+
+    public function getId()
+    {
+        return $this->id;
     }
 
-    public function getGameType(): GameType
+    public function getGameType(): ?GameType
     {
         return $this->gameType;
     }
 
-    public function getVisitors(): Collection
+    public function getVisitors(): ?Collection
     {
         return $this->visitors;
     }
 
-    public function addVisitor(User $user): void
+    public function setVisitors(Collection $visitors): void
+    {
+        $this->visitors = $visitors;
+    }
+
+    public function addSingleVisitor(User $user): void
     {
         $this->visitors->add($user);
     }
 
     public function removeVisitor(User $user): void
     {
-        $this->visitors->remove($user);
+        $this->visitors->removeElement($user);
     }
 
     public function getPriceMoney(): int
@@ -91,5 +111,50 @@ class Tournament
     public function setMaximumMembers(int $maximumMembers): void
     {
         $this->maximumMembers = $maximumMembers;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setGameType(GameType $gameType): void
+    {
+        $this->gameType = $gameType;
+    }
+
+    public function getStartTime(): ?\DateTime
+    {
+        return $this->startTime;
+    }
+
+    public function setStartTime(\DateTime $startTime): void
+    {
+        $this->startTime = $startTime;
+    }
+
+    public function getTables(): int
+    {
+        return $this->tables;
+    }
+
+    public function setTables(int $tables): void
+    {
+        $this->tables = $tables;
+    }
+
+    public function getRunningStatus(): ?\stdClass
+    {
+        return json_decode($this->runningStatus);
+    }
+
+    public function setRunningStatus(array $runningStatus): void
+    {
+        $this->runningStatus = json_encode($runningStatus);
     }
 }

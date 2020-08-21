@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Tournaments{% endblock %}
+
+{% block body %}
+    <h2>Tournaments</h2>
+
+    <div class="button-group">
+        <a href="{{ path('admin_tournament_new') }}" class="btn btn-success">Create new</a><br/><br/>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Game type</th>
+                <th>Visitors</th>
+                <th>Price Money</th>
+                <th>Max. members</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tournament in tournaments %}
+            <tr>
+                <td>{{ tournament.id }}</td>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.gameType }}</td>
+                <td>{{ tournament.visitors|length }}</td>
+                <td>{{ tournament.priceMoney }}</td>
+                <td>{{ tournament.maximumMembers }}</td>
+                <td><a href="{{ path('admin_tournament_details', { 'id': tournament.id }) }}">details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

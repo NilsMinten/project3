@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Running: {{ tournament.name }}{% endblock %}
+
+{% block body %}
+    <h2>Are you sure you want to start the following tournament?</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>ID:</th>
+                    <td>{{ tournament.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{ tournament.name }}</td>
+                </tr>
+                <tr>
+                    <th>Game type:</th>
+                    <td>{{ tournament.gameType }}</td>
+                </tr>
+                <tr>
+                    <th>Price money:</th>
+                    <td>{{ tournament.priceMoney }}</td>
+                </tr>
+                <tr>
+                    <th>Max members:</th>
+                    <td>{{ tournament.maximumMembers }}</td>
+                </tr>
+                <tr>
+                    <th>Starts:</th>
+                    <td>{{ tournament.startTime|date }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <ul class="list-group">
+                {% for visitor in tournament.visitors %}
+                    <li class="list-group-item">{{ visitor.firstName }} {{ visitor.lastName }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="button-group">
+        <a href="{{ path('admin_tournament_details', {'id': tournament.id}) }}" class="btn btn-primary">Cancel</a>
+        <a href="{{ path('tournament_start_running', {'id': tournament.id}) }}" class="btn btn-success">Start Tournament</a>
+    </div>
+
+{% endblock %}

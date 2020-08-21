@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Tournament details{% endblock %}
+
+{% block body %}
+    <h2>Masterclass details</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>ID:</th>
+                    <td>{{ masterclass.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{ masterclass.name }}</td>
+                </tr>
+                <tr>
+                    <th>Game type:</th>
+                    <td>{{ masterclass.gameType }}</td>
+                </tr>
+                <tr>
+                    <th>Min. Rating:</th>
+                    <td>{{ masterclass.minimumRating }}</td>
+                </tr>
+                <tr>
+                    <th>Max. members:</th>
+                    <td>{{ masterclass.maximumMembers }}</td>
+                </tr>
+                <tr>
+                    <th>Starts:</th>
+                    <td>{{ masterclass.startTime }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4">
+            <ul class="list-group">
+                {% for visitor in masterclass.visitors %}
+                    <li class="list-group-item">{{ visitor.firstName }} {{ visitor.lastName }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="button-group">
+        <a href="{{ path('admin_masterclass_edit', { 'id': masterclass.id }) }}" class="btn btn-warning">Edit</a>
+        <a href="{{ path('admin_masterclass_delete_confirm', { 'id': masterclass.id }) }}" class="btn btn-danger">Delete</a>
+    </div>
+
+{% endblock %}

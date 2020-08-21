@@ -15,6 +15,16 @@ class TournamentRepository extends ServiceEntityRepository
         parent::__construct($registry, Tournament::class);
     }
 
+    public function findUpcomming(int $limit = 2) {
+        return $this->createQueryBuilder('t')
+            ->where('t.startTime > :currentTime')
+            ->setParameter('currentTime', new \DateTime())
+            ->orderBy('t.startTime')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(Tournament $user) {
         $this->_em->persist($user);
         $this->_em->flush();

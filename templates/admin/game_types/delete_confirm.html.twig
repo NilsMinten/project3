@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Game type delete{% endblock %}
+
+{% block body %}
+    <h2>Are you sure you want to delete the following game type?</h2>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>ID:</th>
+                <td>{{ gametype.id }}</td>
+            </tr>
+            <tr>
+                <th>Name:</th>
+                <td>{{ gametype.name }}</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>{{ gametype.minRatingForMasterclass }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-group">
+        <a href="{{ path('admin_game_type_details', { 'id': gametype.id }) }}" class="btn btn-default">Cancel</a>
+        <a href="{{ path('admin_game_type_delete', {'id': gametype.id }) }}" class="btn btn-danger">Delete</a>
+    </div>
+
+{% endblock %}

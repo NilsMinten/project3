@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Masterclass delete{% endblock %}
+
+{% block body %}
+    <h2>Are you sure you want to delete the following Masterclass?</h2>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>ID:</th>
+                <td>{{ masterclass.id }}</td>
+            </tr>
+            <tr>
+                <th>Name:</th>
+                <td>{{ masterclass.name }}</td>
+            </tr>
+            <tr>
+                <th>Gametype:</th>
+                <td>{{ masterclass.gametype }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="button-group">
+        <a href="{{ path('admin_masterclass_details', { 'id': masterclass.id }) }}" class="btn btn-default">Cancel</a>
+        <a href="{{ path('admin_masterclass_delete', {'id': masterclass.id }) }}" class="btn btn-danger">Delete</a>
+    </div>
+
+{% endblock %}

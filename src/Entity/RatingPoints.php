@@ -26,7 +26,7 @@ class RatingPoints
 
     /**
      * @var GameType
-     * @ORM\OneToMany(targetEntity="GameType", mappedBy="ratings", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="GameType", inversedBy="ratings", cascade={"persist"})
      */
     private $gameType;
 

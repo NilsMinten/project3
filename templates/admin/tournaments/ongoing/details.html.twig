@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Running: {{ tournament.name }}{% endblock %}
+
+{% block body %}
+    <h2>Tournament Status</h2>
+
+    <div class="row">
+        {% for tableName, users in tableSpread %}
+            <div class="col-md-4">
+                <h2>{{ tableName }}</h2>
+                <ul class="list-group">
+                    {% for user in users %}
+                        <li class="list-group-item">{{ user[1] }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+   </div>
+
+    {% if is_granted('ROLE_EMPLOYEE') %}
+        <br/>
+        <br/>
+        <div class="button-group">
+            <a href="{{ path('tournament_pick_victors', { 'id': tournament.id }) }}" class="btn btn-primary">Note victors</a>
+        </div>
+    {% endif %}
+{% endblock %}

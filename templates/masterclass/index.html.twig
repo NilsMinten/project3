@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Masterclasses{% endblock %}
+
+{% block body %}
+    <h2>Masterclasses</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Game type</th>
+                <th>Visitors</th>
+                <th>Price Money</th>
+                <th>Max. members</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for masterclass in masterclasses %}
+            <tr>
+                <td>{{ masterclass.id }}</td>
+                <td>{{ masterclass.name }}</td>
+                <td>{{ masterclass.gameType }}</td>
+                <td>{{ masterclass.visitors|length }}</td>
+                <td>{{ masterclass.minimumRating }}</td>
+                <td>{{ masterclass.maximumMembers }}</td>
+                <td><a href="{{ path('masterclass_details', { 'id': masterclass.id }) }}">details</a></td>
+                <td>
+                    {% if app.user in masterclass.visitors %}
+                        <a href="{{ path('masterclass_leave', {'id': masterclass.id}) }}" class="btn btn-warning">Cancel</a>
+                    {% else %}
+                        {% if masterclass.visitors|length >= masterclass.maximumMembers %}
+                            <span style="color: purple">Full</span>
+                        {% else %}
+                            <a href="{{ path('masterclass_join', {'id': masterclass.id }) }}" class="btn btn-success">Join</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

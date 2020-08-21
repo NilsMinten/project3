@@ -11,23 +11,38 @@
         <ul class="navbar-nav mr-auto">
         {% if app.user %}
             <li class="nav-item">
-                <a class="nav-link" href="#">Tournaments</a>
+                <a class="nav-link" href="{{ path('tournament_index') }}">Tournaments</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Masterclasses</a>
+                <a class="nav-link" href="{{ path('masterclass_index') }}">Masterclasses</a>
             </li>
             {% if is_granted('ROLE_EMPLOYEE') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Admin panel</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin panel
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('admin_index') }}">Dashboard</a>
+                        <a class="dropdown-item" href="{{ path('admin_tournament_index') }}">Tournaments</a>
+                        <a class="dropdown-item" href="{{ path('admin_masterclass_index') }}">Masterclasses</a>
+                        <a class="dropdown-item" href="{{ path('admin_game_type_index') }}">Game types</a>
+                    </div>
                 </li>
+
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('admin_user_overview') }}">User Management</a>
                 </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('my_account') }}">My account</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    My account
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('my_account') }}">Details</a>
+                    <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+                </div>
             </li>
         {% else %}
             <li class="nav-item">

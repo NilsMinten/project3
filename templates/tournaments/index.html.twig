@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournaments{% endblock %}
+
+{% block body %}
+    <h2>Tournaments</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Game type</th>
+                <th>Visitors</th>
+                <th>Price Money</th>
+                <th>Max. members</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tournament in tournaments %}
+            <tr>
+                <td>{{ tournament.id }}</td>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.gameType }}</td>
+                <td>{{ tournament.visitors|length }}</td>
+                <td>{{ tournament.priceMoney }}</td>
+                <td>{{ tournament.maximumMembers }}</td>
+                <td><a href="{{ path('tournament_details', { 'id': tournament.id }) }}">details</a></td>
+                <td>
+                    {% if app.user in tournament.visitors %}
+                        <a href="{{ path('tournament_leave', {'id': tournament.id}) }}" class="btn btn-warning">Cancel</a>
+                    {% else %}
+                        {% if tournament.visitors|length >= tournament.maximumMembers %}
+                            <span style="color: purple">Full</span>
+                        {% else %}
+                            <a href="{{ path('tournament_join', {'id': tournament.id }) }}" class="btn btn-success">Join</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

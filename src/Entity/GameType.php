@@ -24,30 +24,39 @@ class GameType
      */
     private $rules;
 
+    /** @var string
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
     /** @var int
      * @ORM\Column(type="integer")
      */
     private $minRatingForMasterclass;
 
     /** @var Collection
-     * @ORM\ManyToOne(targetEntity="RatingPoints", inversedBy="gameType", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="RatingPoints", mappedBy="gameType", cascade={"persist"})
      */
     private $ratings;
 
     /** @var Collection
-     * @ORM\ManyToOne(targetEntity="Masterclass", inversedBy="gameType", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Masterclass", mappedBy="gameType", cascade={"persist"})
      */
     private $masterclasses;
 
     /** @var Collection
-     * @ORM\ManyToOne(targetEntity="Tournament", inversedBy="gameType", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Tournament", mappedBy="gameType", cascade={"persist"})
      */
     private $tournaments;
 
-    public function __construct(string $rules, int $minRatingForMasterclass)
+    public function __toString()
     {
-        $this->rules = $rules;
-        $this->minRatingForMasterclass;
+        return $this->getName();
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getRules(): string
@@ -83,5 +92,15 @@ class GameType
     public function getMasterclasses(): Collection
     {
         return $this->masterclasses;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }

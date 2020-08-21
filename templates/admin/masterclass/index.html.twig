@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Masterclass{% endblock %}
+
+{% block body %}
+    <h2>Masterclasses</h2>
+
+    <div class="button-group">
+        <a href="{{ path('admin_masterclass_new') }}" class="btn btn-success">Create new</a><br/><br/>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Game type</th>
+                <th>Visitors</th>
+                <th>Minimum rating</th>
+                <th>Max. members</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for masterclass in masterclasses %}
+            <tr>
+                <td>{{ masterclass.id }}</td>
+                <td>{{ masterclass.name }}</td>
+                <td>{{ masterclass.gameType }}</td>
+                <td>{{ masterclass.visitors|length }}</td>
+                <td>{{ masterclass.minimumRating }}</td>
+                <td>{{ masterclass.maximumMembers }}</td>
+                <td><a href="{{ path('admin_masterclass_details', { 'id': masterclass.id }) }}">details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

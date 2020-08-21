@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Masterclass create/edit{% endblock %}
+
+{% block body %}
+    <h2>Create/edit masterclass</h2>
+
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-8">
+                {{ form_row(form.name) }}
+                {{ form_row(form.gametype) }}
+                {{ form_row(form.minimumRating) }}
+                {{ form_row(form.maximumMembers) }}
+                {{ form_row(form.startTime) }}
+            </div>
+            <div class="col-lg-4">
+                {{ form_row(form.visitors) }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    {{ form_end(form) }}
+{% endblock %}

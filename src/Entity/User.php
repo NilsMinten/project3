@@ -63,12 +63,12 @@ class User implements UserInterface
     private $rating;
 
     /** @var Collection
-     * @ORM\ManyToMany(targetEntity="Masterclass", inversedBy="visitors", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Masterclass", mappedBy="visitors", cascade={"persist"})
      */
     private $masterclasses;
 
     /** @var Collection
-     * @ORM\ManyToMany(targetEntity="Tournament", inversedBy="visitors", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Tournament", mappedBy="visitors", cascade={"persist"})
      */
     private $tournaments;
 

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin | Game types{% endblock %}
+
+{% block body %}
+    <h2>Game types</h2>
+
+    <div class="button-group">
+        <a href="{{ path('admin_game_type_new') }}" class="btn btn-success">Create new</a><br/><br/>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Masterclass rating</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gametype in gametypes %}
+            <tr>
+                <td>{{ gametype.id }}</td>
+                <td>{{ gametype.name }}</td>
+                <td>{{ gametype.minRatingForMasterclass }}</td>
+                <td><a href="{{ path('admin_game_type_details', {'id': gametype.id}) }}">Details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

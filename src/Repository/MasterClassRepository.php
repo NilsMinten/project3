@@ -15,6 +15,16 @@ class MasterClassRepository extends ServiceEntityRepository
         parent::__construct($registry, Masterclass::class);
     }
 
+    public function findUpcomming(int $limit = 2) {
+        return $this->createQueryBuilder('m')
+            ->where('m.startTime > :currentTime')
+            ->setParameter('currentTime', new \DateTime())
+            ->orderBy('m.startTime')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(Masterclass $user) {
         $this->_em->persist($user);
         $this->_em->flush();
